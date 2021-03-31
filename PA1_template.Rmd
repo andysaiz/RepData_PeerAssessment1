@@ -1,8 +1,10 @@
 ---
-title: "Reproducible Research: Peer Assessment 1"
-output: PA1_template.md
-  html_document: PA1_template.html
-    keep_md: true                      
+html_document: PA1_template.html
+output:
+  html_document:
+    df_print: paged
+title: 'Reproducible Research: Peer Assessment 1'
+keep_md: yes
 ---
 setwd("/Users/saizac/Documents/Coursera_R/Module_5/RepData_PeerAssessment1")
 
@@ -20,7 +22,7 @@ library(dplyr)
 sumsteps <- cleaned %>% group_by(date) %>% summarize(total_steps = sum(steps))
 ```
 #Make a histogram of total number of steps taken per day
-```{r histogram, echo = TRUE}
+```{r histogram, echo = TRUE, fig.path = "figures/"}
 hist(sumsteps$total_steps,breaks = 10, freq = TRUE,
      main = "Histogram of Total Steps", xlab = "Total Steps", ylab = "Count",
      col = "olivedrab4", xaxt = "n")
@@ -35,7 +37,7 @@ The mean total number of steps taken is `r mean`.  The median number of steps
 taken is `r median`. 
 
 ## What is the average daily activity pattern?
-```{r stepsperinterval, echo = TRUE, fig.height = 4, fig.width = 4}
+```{r stepsperinterval, echo = TRUE, fig.height = 4, fig.width = 4, fig.path = "figures/"}
 act <- activities[complete.cases(activities), ]
 stepsint <- act %>% group_by(interval) %>% summarize(mean_steps = mean(steps, na.rm = TRUE))
 library(ggplot2)
@@ -87,7 +89,7 @@ A mean of 1 indicates that all original steps values were preserved.
 The mean is `r checkmean`.
 
 #Make a histogram of the total number of steps taken each day.
-```{r histogram, echo = TRUE}
+```{r histogram2, echo = TRUE, fig.path = "figures/"}
 perday <- imputeddf %>% group_by(date) %>% summarize(total = sum(steps_no_NAs))
 binwidth <- (max(perday$total) - min(perday$total))/10
 p2 <- ggplot(perday, aes(x=total)) +
@@ -122,7 +124,7 @@ for (i in 1:nrow(imputeddf)) {
 imputeddf$DayType <- factor(imputeddf$DayType)
 ```
 
-```{r panelplot, echo = TRUE}
+```{r panelplot, echo = TRUE, fig.path = "figures/"}
 #averaging steps across weekday/weekend for each interval
 finaldf <- imputeddf %>% group_by(interval, DayType) %>% 
     summarize(mean_steps = mean(steps_no_NAs))
