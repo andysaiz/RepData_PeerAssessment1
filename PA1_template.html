@@ -1697,8 +1697,16 @@ cleaned &lt;- activities[!is.na(activities$steps), ]</code></pre>
 <div id="what-is-mean-total-number-of-steps-taken-per-day" class="section level2">
 <h2>What is mean total number of steps taken per day?</h2>
 <p>#Calculate the total number of steps taken per day.</p>
-<pre class="r"><code>library(dplyr)
-sumsteps &lt;- cleaned %&gt;% group_by(date) %&gt;% summarize(total_steps = sum(steps))</code></pre>
+<pre class="r"><code>library(dplyr)</code></pre>
+<pre><code>## 
+## Attaching package: &#39;dplyr&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:stats&#39;:
+## 
+##     filter, lag</code></pre>
+<pre><code>## The following objects are masked from &#39;package:base&#39;:
+## 
+##     intersect, setdiff, setequal, union</code></pre>
+<pre class="r"><code>sumsteps &lt;- cleaned %&gt;% group_by(date) %&gt;% summarize(total_steps = sum(steps))</code></pre>
 <pre><code>## `summarise()` ungrouping output (override with `.groups` argument)</code></pre>
 <p>#Make a histogram of total number of steps taken per day</p>
 <pre class="r"><code>hist(sumsteps$total_steps,breaks = 10, freq = TRUE,
